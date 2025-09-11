@@ -1,20 +1,20 @@
 # 🌊Deep Reinforcement Learning with WaterLily
 This project contains a simulation framework for leveraging deep reinforcement learning in studying of the fluid gynamics. Stable BaseLine 3 and WaterLily are essential.
-本项目将 流体动力学仿真 (CFD) 与 强化学习 (RL) 结合，允许智能体在物理真实的流体环境中学习控制策略。
+Waterlily-RL 是一个基于 WaterLily.jl 流体动力学引擎与 Stable-Baselines3 强化学习库构建的跨语言仿真框架，主要用于流体力学场景下的智能控制与策略学习。
 
-Stable-Baselines3 (SB3)：RL 算法 (PPO, SAC...)
+Waterlily-RL 为您提供了：
 
-WaterLily.jl：高性能流体动力学引擎 (Julia 实现)
+* 基于 Julia WaterLily 的高性能流体模拟，直接调用原生 API，无需额外 CFD 库，即可获得真实物理场
 
-Gymnasium API：封装 Julia 环境为 Python RL 环境
+* Python 端 Gymnasium 风格环境封装，支持 Stable-Baselines3 的常用算法 (PPO, SAC, DDPG 等)
 
-典型应用包括：
+* 提供 VIV (涡激振动)、翼型控制、阻力优化 等环境示例，支持扩展新的流体力学任务
 
-涡激振动 (VIV) 控制
+* 支持训练过程中的 渲染与可视化，方便调试与展示仿真效果
 
-翼型 (foil) 优化
+* 模块化的接口设计，便于自由组合 场景参数、动力学模型与 RL 算法
 
-流场控制
+请查看文档以获取更多信息 (更新中)
 
 ## Get Started
 ### Preparation
