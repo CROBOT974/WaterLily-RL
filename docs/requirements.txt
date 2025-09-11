@@ -1,0 +1,11 @@
+sphinxcontrib-apidoc
+m2r2
+sphinx-press-theme
+sphinxcontrib-napoleon
+sphinxcontrib-qthelp
+sphinxcontrib-serializinghtml
+numpy
+julia
+gymnasium
+stable-baselines3
+matplotlibs
