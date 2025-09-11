@@ -64,4 +64,4 @@ python test.py --env_name="VIV-v0" --total_timesteps=80_000 --filename="PPO_mode
 ```
 ## Result
 ### Gif of the VIV scenario
-[![VIV-v0](viv_simulation.gif)](https://github.com/CROBOT975/HSR_RL-environment/blob/main/demonstration/grasping_result.mp4?raw=true)
+[![VIV-v0](viv_simulation.gif)]()
