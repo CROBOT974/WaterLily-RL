@@ -8,6 +8,7 @@ Waterlily-RL offers you:
 * Provide environmental examples such as VIV (Vortex-Induced Vibration), airfoil control, drag optimization, etc., and support the expansion of new fluid mechanics tasks. 
 * Support rendering and visualization during the training process to facilitate debugging and demonstrating simulation effects. 
 * The modular interface design facilitates the free combination of scene parameters, dynamic models, and RL algorithms. 
+
 Please refer to the document for more information (under update).
 
 
