@@ -19,6 +19,28 @@ Gymnasium API：封装 Julia 环境为 Python RL 环境
 ## Install
 * **Download**
 ```
-git clone https://github.com/CROBOT975/HSR_RL-environment.git
+git clone https://github.com/CROBOT974/RL-WaterLily.git
 cd RL-WaterLily
+```
+* **Python packages**
+```
+pip install -e .
+```
+* **Julia packages**
+```
+Julia
+using Pkg
+Pkg.add([
+    "ImageCore",
+    "WaterLily",
+    "StaticArrays",
+    "PyPlot",
+    "PyCall",
+    "ColorSchemes",
+    "ImageIO",
+    "FileIO",
+    "Colors",
+    "Images",
+    "Statistics"
+])
 ```
