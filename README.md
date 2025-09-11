@@ -58,7 +58,11 @@ Pkg.add([
     "Statistics"
 ])
 ```
-### Run a demp(learning)
+### Run a demo(learning)
 ```
 python test.py --env_name="VIV-v0" --total_timesteps=80_000 --filename="PPO_model" -learn
 ```
+## Result
+### Gif of the VIV scenario
+
+![VIV-v0](https://github.com/CROBOT974/RL-WaterLily/viv_simulation_2.gif)
