@@ -17,22 +17,24 @@ Gymnasium API：封装 Julia 环境为 Python RL 环境
 流场控制
 
 ## Get Started
-* **Preparation**
-Windows / Linux
+### Preparation
+* **Windows / Linux**
+* **Python 3.10 +**
+* **Julia 1.10.9**
 
 MuJoCo-3.1.5
 
 Python 3.8 +
-* **Download**
+### Download
 ```
 git clone https://github.com/CROBOT974/RL-WaterLily.git
 cd RL-WaterLily
 ```
-* **Python packages**
+### Python packages
 ```
 pip install -e .
 ```
-* **Julia packages**
+### Julia packages
 ```
 using Pkg
 Pkg.add([
