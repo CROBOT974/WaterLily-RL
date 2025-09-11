@@ -65,4 +65,4 @@ python test.py --env_name="VIV-v0" --total_timesteps=80_000 --filename="PPO_mode
 ## Result
 ### Gif of the VIV scenario
 
-![VIV-v0](https://github.com/CROBOT974/RL-WaterLily/raw/main/viv_simulation_2.gif)
+![VIV-v0]([https://github.com/CROBOT974/RL-WaterLily/raw/main/viv_simulation_2.gif](https://github.com/CROBOT974/RL-WaterLily/blob/eff78d9072fa6794256387eb51db737a8a96063b/viv_simulation_2.gif))
