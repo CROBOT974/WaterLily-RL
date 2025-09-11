@@ -19,9 +19,9 @@ Waterlily-RL is a cross-language simulation framework built on the WaterLily.jl 
 
 Waterlily-RL offers you: 
 
-* High-performance fluid simulation based on Julia WaterLily, directly calling the native API, without the need for additional CFD libraries, to obtain real physical fields. 
-* Python Gymnasium-style environment wrapper, supporting common algorithms of Stable-Baselines3 (PPO, SAC, DDPG, etc.) 
-* Provide environmental examples such as VIV (Vortex-Induced Vibration), airfoil control, drag optimization, etc., and support the expansion of new fluid mechanics tasks. 
+* High-performance fluid simulation based on Julia WaterLily, directly calling the native API, without the need for additional CFD libraries, to obtain real fluid fields. 
+* Gymnasium-style wrapper of enviroment in Python, supporting common algorithms of Stable-Baselines3 (PPO, SAC, DDPG, etc.) 
+* Provide environmental examples such as VIV (Vortex-Induced Vibration), airfoil control, drag optimization, etc., and support the expansion of new fluid dynamic tasks. 
 * Support rendering and visualization during the training process to facilitate debugging and demonstrating simulation effects. 
 * The modular interface design facilitates the free combination of scene parameters, dynamic models, and RL algorithms. 
 
@@ -39,7 +39,7 @@ cd RL-WaterLily
 ```
 ### Python packages
 ```
-pip install -e .
+pip install -r requirements.txt
 ```
 ### Julia packages
 ```
@@ -57,4 +57,8 @@ Pkg.add([
     "Images",
     "Statistics"
 ])
+```
+### Run a demp
+```
+
 ```
