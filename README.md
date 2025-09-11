@@ -28,7 +28,6 @@ pip install -e .
 ```
 * **Julia packages**
 ```
-Julia
 using Pkg
 Pkg.add([
     "ImageCore",
