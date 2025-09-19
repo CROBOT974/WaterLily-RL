@@ -1,0 +1,355 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>model.VIV_gym &mdash; RL-WaterLily 0.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=01f34227"></script>
+      <script src="../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            RL-WaterLily
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">source</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">RL-WaterLily</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+          <li class="breadcrumb-item"><a href="../model.html">model</a></li>
+      <li class="breadcrumb-item active">model.VIV_gym</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for model.VIV_gym</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">gymnasium</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">gym</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">gymnasium</span><span class="w"> </span><span class="kn">import</span> <span class="n">spaces</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">matplotlib.backends.backend_agg</span><span class="w"> </span><span class="kn">import</span> <span class="n">FigureCanvasAgg</span> <span class="k">as</span> <span class="n">FigureCanvas</span>
+<span class="n">matplotlib</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s2">&quot;TkAgg&quot;</span><span class="p">)</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">julia.api</span><span class="w"> </span><span class="kn">import</span> <span class="n">Julia</span>
+<span class="n">jl</span> <span class="o">=</span> <span class="n">Julia</span><span class="p">(</span><span class="n">compiled_modules</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">julia</span><span class="w"> </span><span class="kn">import</span> <span class="n">Main</span>
+
+<div class="viewcode-block" id="WL_Base">
+<a class="viewcode-back" href="../../model.html#model.VIV_gym.WL_Base">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">WL_Base</span><span class="p">:</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">env_module</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">env</span> <span class="o">=</span> <span class="n">env_module</span><span class="o">.</span><span class="n">init_env</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">step_fn</span> <span class="o">=</span> <span class="n">env_module</span><span class="o">.</span><span class="n">step_b</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">reset_fn</span> <span class="o">=</span> <span class="n">env_module</span><span class="o">.</span><span class="n">reset_b</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">get_state_fn</span> <span class="o">=</span> <span class="n">env_module</span><span class="o">.</span><span class="n">get_state</span>
+    
+<div class="viewcode-block" id="WL_Base.getActionSpace">
+<a class="viewcode-back" href="../../model.html#model.VIV_gym.WL_Base.getActionSpace">[docs]</a>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">getActionSpace</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">num</span> <span class="o">=</span> <span class="mi">1</span><span class="p">):</span> <span class="c1"># TODO：不对称action也需要考虑</span>
+
+        <span class="k">return</span> <span class="n">spaces</span><span class="o">.</span><span class="n">Box</span><span class="p">(</span><span class="n">low</span><span class="o">=-</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">high</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">num</span><span class="p">,),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span></div>
+
+    
+<div class="viewcode-block" id="WL_Base.getObservationSpace">
+<a class="viewcode-back" href="../../model.html#model.VIV_gym.WL_Base.getObservationSpace">[docs]</a>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">getObservationSpace</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">num</span> <span class="o">=</span> <span class="mi">4</span><span class="p">):</span>
+
+       <span class="k">return</span> <span class="n">spaces</span><span class="o">.</span><span class="n">Box</span><span class="p">(</span><span class="n">low</span><span class="o">=-</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">,</span> <span class="n">high</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">num</span><span class="p">,),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span></div>
+</div>
+
+    
+
+<div class="viewcode-block" id="VIVEnv">
+<a class="viewcode-back" href="../../model.html#model.VIV_gym.VIVEnv">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">VIVEnv</span><span class="p">(</span><span class="n">WL_Base</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">getEnv</span><span class="p">())</span>
+    
+<div class="viewcode-block" id="VIVEnv.getEnv">
+<a class="viewcode-back" href="../../model.html#model.VIV_gym.VIVEnv.getEnv">[docs]</a>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">getEnv</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+        <span class="n">file_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">),</span> <span class="s2">&quot;VIV_Env_2.jl&quot;</span><span class="p">)</span>
+        <span class="n">Main</span><span class="o">.</span><span class="n">include</span><span class="p">(</span><span class="n">file_name</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">Main</span><span class="o">.</span><span class="n">VIVEnv</span></div>
+</div>
+
+    
+
+<div class="viewcode-block" id="FoilEnv">
+<a class="viewcode-back" href="../../model.html#model.VIV_gym.FoilEnv">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">FoilEnv</span><span class="p">(</span><span class="n">WL_Base</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">getEnv</span><span class="p">())</span>
+    
+<div class="viewcode-block" id="FoilEnv.getEnv">
+<a class="viewcode-back" href="../../model.html#model.VIV_gym.FoilEnv.getEnv">[docs]</a>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">getEnv</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+        <span class="n">file_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">),</span> <span class="s2">&quot;foil_Env.jl&quot;</span><span class="p">)</span>
+        <span class="n">Main</span><span class="o">.</span><span class="n">include</span><span class="p">(</span><span class="n">file_name</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">Main</span><span class="o">.</span><span class="n">FOILEnv</span></div>
+</div>
+
+    
+<div class="viewcode-block" id="DragEnv">
+<a class="viewcode-back" href="../../model.html#model.VIV_gym.DragEnv">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">DragEnv</span><span class="p">(</span><span class="n">WL_Base</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">getEnv</span><span class="p">())</span>
+    
+<div class="viewcode-block" id="DragEnv.getEnv">
+<a class="viewcode-back" href="../../model.html#model.VIV_gym.DragEnv.getEnv">[docs]</a>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">getEnv</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+        <span class="n">file_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">),</span> <span class="s2">&quot;Drag_Env.jl&quot;</span><span class="p">)</span>
+        <span class="n">Main</span><span class="o">.</span><span class="n">include</span><span class="p">(</span><span class="n">file_name</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">Main</span><span class="o">.</span><span class="n">DragEnv</span></div>
+</div>
+
+    
+<div class="viewcode-block" id="ShapeOpEnv">
+<a class="viewcode-back" href="../../model.html#model.VIV_gym.ShapeOpEnv">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">ShapeOpEnv</span><span class="p">(</span><span class="n">WL_Base</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">getEnv</span><span class="p">())</span>
+    
+<div class="viewcode-block" id="ShapeOpEnv.getEnv">
+<a class="viewcode-back" href="../../model.html#model.VIV_gym.ShapeOpEnv.getEnv">[docs]</a>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">getEnv</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+        <span class="n">file_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">),</span> <span class="s2">&quot;shapeop_Env.jl&quot;</span><span class="p">)</span>
+        <span class="n">Main</span><span class="o">.</span><span class="n">include</span><span class="p">(</span><span class="n">file_name</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">Main</span><span class="o">.</span><span class="n">FOILEnv</span></div>
+</div>
+
+        
+
+<div class="viewcode-block" id="JuliaEnv">
+<a class="viewcode-back" href="../../model.html#model.VIV_gym.JuliaEnv">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">JuliaEnv</span><span class="p">(</span><span class="n">gym</span><span class="o">.</span><span class="n">Env</span><span class="p">):</span> 
+    <span class="n">metadata</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;render_modes&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;rgb_array&quot;</span><span class="p">],</span> <span class="s2">&quot;render_fps&quot;</span><span class="p">:</span> <span class="mi">15</span><span class="p">}</span>
+        
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">render_mode</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">env</span> <span class="o">=</span> <span class="n">VIVEnv</span><span class="p">,</span> <span class="n">max_episode_steps</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> 
+                 <span class="n">statics</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">variables</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">spaces</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="c1"># === Julia  ===</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">wf</span> <span class="o">=</span> <span class="n">env</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">action_space</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">getActionSpace</span><span class="p">(</span><span class="n">num</span> <span class="o">=</span> <span class="n">spaces</span><span class="p">[</span><span class="s2">&quot;action&quot;</span><span class="p">])</span>                          <span class="c1"># action space</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">observation_space</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">getObservationSpace</span><span class="p">(</span><span class="n">num</span> <span class="o">=</span> <span class="n">spaces</span><span class="p">[</span><span class="s2">&quot;observation&quot;</span><span class="p">])</span>           <span class="c1"># observation space  </span>
+
+        <span class="c1"># params for constuct the scenario</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">reset_action</span> <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">scale</span> <span class="o">=</span> <span class="n">statics</span><span class="p">[</span><span class="s2">&quot;action_scale&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">statics</span> <span class="o">=</span> <span class="n">statics</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">variables</span> <span class="o">=</span> <span class="n">variables</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">env</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">wf</span><span class="o">.</span><span class="n">env</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span> <span class="o">=</span> <span class="n">verbose</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Julia VIV Environment initialized.&quot;</span><span class="p">)</span>
+        <span class="c1"># === paras ===</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">render_mode</span> <span class="o">=</span> <span class="n">render_mode</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">max_episode_steps</span> <span class="o">=</span> <span class="n">max_episode_steps</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">step_count</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">reward_sum</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="c1"># === img paras ===</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">size</span> <span class="o">=</span> <span class="n">statics</span><span class="p">[</span><span class="s2">&quot;size&quot;</span><span class="p">]</span>
+        <span class="n">img_size</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">size</span> <span class="o">*</span> <span class="mi">100</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">last_img</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">img_size</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">img_size</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="mi">3</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="JuliaEnv.reset">
+<a class="viewcode-back" href="../../model.html#model.VIV_gym.JuliaEnv.reset">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">reset</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="n">seed</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">step_count</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="c1"># reset the action</span>
+        <span class="n">action</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_resetAction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">reset_action</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">wf</span><span class="o">.</span><span class="n">reset_fn</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">env</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">statics</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">variables</span><span class="p">)</span>
+        <span class="n">obs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_getObservation</span><span class="p">()</span>
+        <span class="c1"># warm</span>
+        <span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">img</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_oneStep</span><span class="p">(</span><span class="n">action</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">last_img</span> <span class="o">=</span> <span class="n">img</span>
+
+        <span class="k">return</span> <span class="n">obs</span><span class="p">,</span> <span class="p">{}</span></div>
+
+
+<div class="viewcode-block" id="JuliaEnv.step">
+<a class="viewcode-back" href="../../model.html#model.VIV_gym.JuliaEnv.step">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">action</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">step_count</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="n">action</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_scaleAction</span><span class="p">(</span><span class="n">action</span><span class="p">)</span>
+
+        <span class="c1"># print(&quot;action: &quot;, action)</span>
+
+        <span class="n">obs</span><span class="p">,</span> <span class="n">reward</span><span class="p">,</span> <span class="n">done</span><span class="p">,</span> <span class="n">img</span><span class="p">,</span> <span class="n">F</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_oneStep</span><span class="p">(</span><span class="n">action</span><span class="p">)</span>
+        
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">reward_sum</span> <span class="o">+=</span> <span class="n">reward</span>
+            <span class="k">if</span> <span class="n">done</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">step_count</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_episode_steps</span><span class="p">:</span>
+                <span class="c1"># mean_reward = self.reward_sum / self.step_count</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Reward_Sum: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">reward_sum</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">reward_sum</span> <span class="o">=</span> <span class="mi">0</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;done:&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+
+        <span class="n">terminated</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">done</span><span class="p">)</span>
+        <span class="n">truncated</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">step_count</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_episode_steps</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">last_img</span> <span class="o">=</span> <span class="n">img</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">last_img</span>  <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">expand_dims</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">last_img</span><span class="p">,</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">info</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;info&quot;</span><span class="p">:</span> <span class="n">F</span><span class="p">}</span>
+
+        <span class="k">return</span> <span class="n">obs</span><span class="p">,</span> <span class="nb">float</span><span class="p">(</span><span class="n">reward</span><span class="p">),</span> <span class="n">terminated</span><span class="p">,</span> <span class="n">truncated</span><span class="p">,</span> <span class="n">info</span></div>
+
+    
+<div class="viewcode-block" id="JuliaEnv.render">
+<a class="viewcode-back" href="../../model.html#model.VIV_gym.JuliaEnv.render">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">render</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;render is on&quot;</span><span class="p">)</span>
+
+        <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">last_img</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s2">&quot;off&quot;</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">pause</span><span class="p">(</span><span class="mf">0.01</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+
+    
+    <span class="k">def</span><span class="w"> </span><span class="nf">_oneStep</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">action</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        </span>
+<span class="sd">        Simulate One Step</span>
+
+<span class="sd">        :param  action: a float value of action</span>
+<span class="sd">        :return observation: the state after one step</span>
+<span class="sd">        :return reward: the reward after one step</span>
+<span class="sd">        :return done: ture if reached the terminate time</span>
+<span class="sd">        :return image: data of the resulting image after one-step</span>
+<span class="sd">        :return informations: extra infos</span>
+
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">observation</span><span class="p">,</span> <span class="n">reward</span><span class="p">,</span> <span class="n">done</span><span class="p">,</span> <span class="n">image</span><span class="p">,</span> <span class="n">informations</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">wf</span><span class="o">.</span><span class="n">step_fn</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">env</span><span class="p">,</span> <span class="n">action</span><span class="p">,</span> <span class="n">render</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">render_mode</span> <span class="o">==</span> <span class="s2">&quot;rgb_array&quot;</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">observation</span><span class="p">,</span> <span class="n">reward</span><span class="p">,</span> <span class="n">done</span><span class="p">,</span> <span class="n">image</span><span class="p">,</span> <span class="n">informations</span>
+    
+    <span class="k">def</span><span class="w"> </span><span class="nf">_resetAction</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+
+        <span class="k">return</span> <span class="n">value</span>
+    
+    <span class="k">def</span><span class="w"> </span><span class="nf">_getObservation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return the current state</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">wf</span><span class="o">.</span><span class="n">get_state_fn</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">env</span><span class="p">)</span>
+    
+    
+    <span class="k">def</span><span class="w"> </span><span class="nf">_scaleAction</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">action</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        </span>
+<span class="sd">        Scale the normalized action to the real magnitude</span>
+
+<span class="sd">        :param  action: normalized action value</span>
+<span class="sd">        :return action: sacled action value</span>
+<span class="sd">        </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">action_scale</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">scale</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">action</span><span class="p">)</span>
+        
+        <span class="n">action</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">action_scale</span><span class="p">,</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">scale</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">scale</span><span class="p">))</span>
+        <span class="n">action</span> <span class="o">=</span> <span class="n">action</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">action</span>
+
+<div class="viewcode-block" id="JuliaEnv.close">
+<a class="viewcode-back" href="../../model.html#model.VIV_gym.JuliaEnv.close">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">pass</span></div>
+</div>
+
+    
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Testing JuliaDragEnv...&quot;</span><span class="p">)</span>
+
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Chi Cheng, Aoming Liang, Boai Sun, Yuqi Yan, Dixia Fan.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
