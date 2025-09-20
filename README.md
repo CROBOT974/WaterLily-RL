@@ -66,8 +66,8 @@ python test.py --env_name="VIV-v0" --total_timesteps=80_000 --filename="PPO_mode
 ### Gif of the VIV scenario
 * Before training
 
-![VIV-v0](./viv_simulation.gif)
+![VIV-v0](./result/viv_simulation.gif)
 
 * After training
 
-![VIV-trained](./train_policy_demo.gif)
+![VIV-trained](./result/train_policy_demo.gif)
