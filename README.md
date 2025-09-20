@@ -1,5 +1,3 @@
-<img width="1536" height="1024" alt="image" src="https://github.com/user-attachments/assets/3de5bd1a-52e6-4c5f-847d-68ababd2f11e" />
-
 # WaterLily-RL: WaterLily-based Deep Reinforcement Learning Project
 WaterLily-RL 是一个基于 WaterLily.jl 流体动力学引擎与 Stable-Baselines3 强化学习库构建的跨语言仿真框架，主要用于流体力学场景下的智能控制与策略学习。
 
