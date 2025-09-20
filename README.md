@@ -58,7 +58,7 @@ Pkg.add([
     "Statistics"
 ])
 ```
-### Run a demo(learning)
+### Run a demo(测试中)
 ```
 python test.py --env_name="VIV-v0" --total_timesteps=80_000 --filename="PPO_model" -learn
 ```
