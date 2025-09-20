@@ -1,7 +1,7 @@
-# 🌊Deep Reinforcement Learning with WaterLily
-Waterlily-RL 是一个基于 WaterLily.jl 流体动力学引擎与 Stable-Baselines3 强化学习库构建的跨语言仿真框架，主要用于流体力学场景下的智能控制与策略学习。
+# 🌊WaterLily-RL: WaterLily-based Deep Reinforcement Learning Project
+WaterLily-RL 是一个基于 WaterLily.jl 流体动力学引擎与 Stable-Baselines3 强化学习库构建的跨语言仿真框架，主要用于流体力学场景下的智能控制与策略学习。
 
-Waterlily-RL 为您提供了：
+WaterLily-RL 为您提供了：
 
 * 基于 Julia WaterLily 的高性能流体模拟，直接调用原生 API，无需额外 CFD 库，即可获得真实物理场
 
