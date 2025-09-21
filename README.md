@@ -62,7 +62,7 @@ Pkg.add([
 ```
 python test.py --env_name="VIV-v0" --total_timesteps=80_000 --filename="PPO_model" -learn
 ```
-## Result
+## Tutorial
 ### Gif of the VIV scenario
 * Before training
 
