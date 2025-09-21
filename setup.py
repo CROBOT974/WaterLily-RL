@@ -17,6 +17,7 @@ setup(
         "gymnasium",
         "stable-baselines3",
         "matplotlib",
+        "imageio",
     ],
     classifiers=[              # 分类信息（可选）
         "License :: OSI Approved :: MIT License",
