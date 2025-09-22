@@ -22,15 +22,15 @@ mutable struct VIVSimEnv{T} <: AbstractEnv
     infos::Vector{Any}
     D::Int
     step::Int
-    vx::T         # 当前控制速度（施加给圆柱体的 x 方向速度）
-    vy::T
-    px::T         # 当前 x 位移
-    py::T
-    px_ref::Base.RefValue{T}  # 圆柱当前位移-x
-    py_ref::Base.RefValue{T}  # 圆柱当前位移-y
-    vx_ref::Base.RefValue{T}  # 圆柱当前速度-x
-    vy_ref::Base.RefValue{T}  # 圆柱当前速度-y
-    t_ref::Base.RefValue{T}
+    vx::T                           # current velocity in the x direction
+    vy::T                           # current velocity in the y direction
+    px::T                           # current displacement in the x direction
+    py::T                           # current displacement in the y direction
+    px_ref::Base.RefValue{T}        # reference to px
+    py_ref::Base.RefValue{T}        # reference to py
+    vx_ref::Base.RefValue{T}        # reference to vx
+    vy_ref::Base.RefValue{T}        # reference to vx
+    t_ref::Base.RefValue{T}         # reference to t
 end
 
 _maybe_call(x) = x
@@ -52,7 +52,7 @@ function make_sim(px_ref::Base.RefValue{<:Real}, py_ref::Base.RefValue{<:Real}, 
     end
 
 
-    # 圆柱体位置函数（由 p_ref 控制）
+    # body func of the object
     body = AutoBody(
         (x, t) -> √sum(abs2, x .- center) - radius,
         map
@@ -125,7 +125,7 @@ function step!(env::VIVSimEnv, F::Real; render=false)
     # mass of the circle
     rho = 1.0f0                               # density of fluid
     radius = T(env.D / 2)
-    mₐ = T(π * radius^2 * rho)                 # displacement mass
+    mₐ = T(π * radius^2 * rho)                # displacement mass
     m = T(2 * mₐ)                             # structural mass
 
     # elastic coefficient
@@ -133,22 +133,11 @@ function step!(env::VIVSimEnv, F::Real; render=false)
     kx = T(4 * π^2 * m * fn^2)
     ky = kx
 
-
-    #     println("force in x direction = $(force[1]), force in y direction = $(force[2])")
-
+    # time set
     Δt = env.sim.flow.Δt[end]
-
-    # # x方向（VIV响应）
-    # env.px_ref[] = env.px + Δt * env.vx
-
-    # # y方向（VIV响应）
-    # env.py_ref[] = env.py + Δt * env.vy
-
     tphys = sum(env.sim.flow.Δt[1:end-1])
     env.t_ref[] = tphys
     tphys += Δt
-
-
 
     # === Warm-up: t ∈ [0, 2]
     if env.step < 0.0
@@ -168,11 +157,11 @@ function step!(env::VIVSimEnv, F::Real; render=false)
         measure!(env.sim, tphys)
         mom_step!(env.sim.flow, env.sim.pois)
 
-        # x方向（VIV响应）
+        # x-direction（VIV）
         ax = (force[1] - kx * env.px) / m
         env.px += Δt * (env.vx + Δt * ax / 2.0f0)
         env.vx += Δt * ax
-        # y方向（VIV响应
+        # y-direction（VIV)
         ay = (force[2] + F - ky * env.py) / m
         env.py += Δt * (env.vy + Δt * ay / 2.0f0)
         env.vy += Δt * ay
@@ -193,14 +182,9 @@ function step!(env::VIVSimEnv, F::Real; render=false)
             "vx" => Float64(env.vx))
 
         push!(env.infos, info)
-        #     println("step $t: length(cps) = $(length(env.infos)), last cp = $(info)")
+        # println("step $t: length(cps) = $(length(env.infos)), last cp = $(info)")
         reward = -abs(env.py) / env.D
 
-        # if abs(env.py)/env.D >= 1
-        #     done = true
-        #     reward = -100
-        #     println("Break")
-        # end
         if env.step ≥ 1600
             done = true
             println("Done_True")
