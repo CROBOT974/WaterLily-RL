@@ -34,8 +34,8 @@ Please refer to the document for more information (under update).
 * **Julia 1.10.9**
 ### Download
 ```
-git clone https://github.com/CROBOT974/RL-WaterLily.git
-cd RL-WaterLily
+git clone https://github.com/CROBOT974/WaterLily-RL.git
+cd WaterLily-RL
 ```
 ### Python packages
 ```
@@ -63,7 +63,7 @@ Pkg.add([
 python test.py --env_name="VIV-v0" --total_timesteps=80_000 --filename="PPO_model" -learn
 ```
 ## Tutorial
-### Gif of the VIV scenario
+### Restrain the Vortex-induced Vibration
 * Before training
 
 ![VIV-v0](./result/viv_simulation.gif)
