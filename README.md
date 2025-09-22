@@ -35,7 +35,7 @@ Please refer to the document for more information (under update).
 ### Download
 ```
 git clone https://github.com/CROBOT974/RL-WaterLily.git
-cd RL-WaterLily
+cd WaterLily-RL
 ```
 ### Python packages
 ```
