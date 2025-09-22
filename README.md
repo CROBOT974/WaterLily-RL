@@ -34,7 +34,7 @@ Please refer to the document for more information (under update).
 * **Julia 1.10.9**
 ### Download
 ```
-git clone [https://github.com/CROBOT974/RL-WaterLily.git](https://github.com/CROBOT974/WaterLily-RL.git)
+git clone https://github.com/CROBOT974/RL-WaterLily.git
 cd WaterLily-RL
 ```
 ### Python packages
