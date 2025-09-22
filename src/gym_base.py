@@ -9,7 +9,7 @@ import matplotlib.pyplot as plt
 from julia.api import Julia
 jl = Julia(compiled_modules=False)
 from julia import Main
-file = "./julia_model"
+file = "./julia_env"
 
 class WL_Base:
 
