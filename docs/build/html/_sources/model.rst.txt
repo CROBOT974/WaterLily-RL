@@ -4,10 +4,10 @@ model package
 Submodules
 ----------
 
-model.VIV\_gym module
+src.VIV\_gym module
 ---------------------
 
-.. automodule:: model.VIV_gym
+.. automodule:: src.VIV_gym
    :members:
    :undoc-members:
    :show-inheritance:

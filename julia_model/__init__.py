@@ -1,6 +1,6 @@
 import gymnasium as gym
 from gymnasium.envs.registration import register
-from ..src.VIV_gym import VIVEnv, FoilEnv, DragEnv, ShapeOpEnv, JuliaEnv
+from ..src.gym_base import VIVEnv, FoilEnv, DragEnv, ShapeOpEnv, JuliaEnv
 import numpy as np
 
 diameter = 64

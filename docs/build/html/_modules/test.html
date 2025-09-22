@@ -1,0 +1,218 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>test &mdash; RL-WaterLily 0.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=01f34227"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            RL-WaterLily
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">USER GUIDE:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../modules.html">source</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">MODULES:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../modules.html">source</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">TUTORIALS:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../modules.html">source</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">RL-WaterLily</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Module code</a></li>
+      <li class="breadcrumb-item active">test</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for test</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">gymnasium</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">gym</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">argparse</span>
+
+<span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;JULIA_NUM_THREADS&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;8&quot;</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">julia</span><span class="w"> </span><span class="kn">import</span> <span class="n">Julia</span>
+<span class="n">jl</span> <span class="o">=</span> <span class="n">Julia</span><span class="p">(</span><span class="n">compiled_modules</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">julia</span><span class="w"> </span><span class="kn">import</span> <span class="n">Main</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">Main</span><span class="o">.</span><span class="n">eval</span><span class="p">(</span><span class="s2">&quot;Threads.nthreads()&quot;</span><span class="p">))</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">src.VIV_gym</span><span class="w"> </span><span class="kn">import</span> <span class="n">JuliaEnv</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">Lib支持</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">torch.nn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">nn</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">gymnasium.wrappers</span><span class="w"> </span><span class="kn">import</span> <span class="n">RescaleAction</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">stable_baselines3</span><span class="w"> </span><span class="kn">import</span> <span class="n">PPO</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">stable_baselines3</span><span class="w"> </span><span class="kn">import</span> <span class="n">SAC</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">stable_baselines3.common.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">set_random_seed</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">stable_baselines3.common.vec_env</span><span class="w"> </span><span class="kn">import</span> <span class="n">DummyVecEnv</span><span class="p">,</span> <span class="n">SubprocVecEnv</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">stable_baselines3.common.callbacks</span><span class="w"> </span><span class="kn">import</span> <span class="n">BaseCallback</span><span class="p">,</span> <span class="n">CheckpointCallback</span><span class="p">,</span> <span class="n">CallbackList</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">imageio</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="c1"># dir videos</span>
+<span class="n">video_folder</span> <span class="o">=</span> <span class="s2">&quot;./videos/&quot;</span>
+<span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">video_folder</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">反馈reward和建立checkpoint</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="RewardLoggerCallback">
+<a class="viewcode-back" href="../python_api/test.html#test.RewardLoggerCallback">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">RewardLoggerCallback</span><span class="p">(</span><span class="n">BaseCallback</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">verbose</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">episode_rewards</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">current_rewards</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">step</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_on_training_start</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">current_rewards</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">training_env</span><span class="o">.</span><span class="n">num_envs</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_on_step</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="n">rewards</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">locals</span><span class="p">[</span><span class="s2">&quot;rewards&quot;</span><span class="p">]</span>
+        <span class="n">dones</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">locals</span><span class="p">[</span><span class="s2">&quot;dones&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">current_rewards</span> <span class="o">+=</span> <span class="n">rewards</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">step</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">done</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">dones</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">done</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">episode_rewards</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">current_rewards</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">step</span><span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;step:&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">step</span><span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;current_rewards&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_rewards</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">step</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">current_rewards</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">step</span> <span class="o">=</span> <span class="mf">0.0</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;reward is recorded&quot;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="kc">True</span></div>
+
+
+<span class="n">checkpoint_callback</span> <span class="o">=</span> <span class="n">CheckpointCallback</span><span class="p">(</span>
+    <span class="n">save_freq</span><span class="o">=</span> <span class="mi">1000</span><span class="p">,</span>
+    <span class="n">save_path</span><span class="o">=</span><span class="s2">&quot;./checkpoints/&quot;</span><span class="p">,</span>
+    <span class="n">name_prefix</span><span class="o">=</span><span class="s2">&quot;ppo_model&quot;</span><span class="p">,</span>
+    <span class="n">save_replay_buffer</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">save_vecnormalize</span><span class="o">=</span><span class="kc">True</span>
+<span class="p">)</span>
+
+<div class="viewcode-block" id="learn">
+<a class="viewcode-back" href="../python_api/test.html#test.learn">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">learn</span><span class="p">(</span><span class="n">env_name</span> <span class="o">=</span> <span class="s2">&quot;VIV-v0&quot;</span><span class="p">,</span> <span class="n">save_file</span> <span class="o">=</span> <span class="s2">&quot;PPO_model&quot;</span><span class="p">,</span> <span class="n">total_timesteps</span> <span class="o">=</span> <span class="mi">80_000</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    单线程环境建立，训练，保持(注册表)</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">env</span> <span class="o">=</span> <span class="n">DummyVecEnv</span><span class="p">([</span><span class="k">lambda</span><span class="p">:</span> <span class="n">gym</span><span class="o">.</span><span class="n">make</span><span class="p">(</span><span class="n">env_name</span><span class="p">)])</span>
+
+    <span class="n">model</span> <span class="o">=</span> <span class="n">PPO</span><span class="p">(</span>
+        <span class="s2">&quot;MlpPolicy&quot;</span><span class="p">,</span>
+        <span class="n">env</span><span class="o">=</span><span class="n">env</span><span class="p">,</span>
+        <span class="n">verbose</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+        <span class="n">device</span> <span class="o">=</span> <span class="s1">&#39;cpu&#39;</span>
+    <span class="p">)</span>
+    <span class="n">reward_callback</span> <span class="o">=</span> <span class="n">RewardLoggerCallback</span><span class="p">()</span>
+    <span class="n">callback</span> <span class="o">=</span> <span class="n">CallbackList</span><span class="p">([</span><span class="n">checkpoint_callback</span><span class="p">,</span> <span class="n">reward_callback</span><span class="p">])</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">learn</span><span class="p">(</span><span class="n">total_timesteps</span><span class="o">=</span><span class="n">total_timesteps</span><span class="p">,</span> <span class="n">callback</span> <span class="o">=</span> <span class="n">callback</span><span class="p">)</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">save_file</span><span class="p">)</span>
+    <span class="n">rewards</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">reward_callback</span><span class="o">.</span><span class="n">episode_rewards</span><span class="p">)</span>
+    <span class="n">env</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
+
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">()</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--learn&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s1">&#39;store_true&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s1">&#39;play or learn.&#39;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--env_name&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s1">&#39;VIV-v0&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s1">&#39;environment name.&#39;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--filename&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s1">&#39;PPO_model&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s1">&#39;filename to save/load model.&#39;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--total_timesteps&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mi">80_000</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s1">&#39;total timesteps.&#39;</span><span class="p">)</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
+
+    <span class="n">learn</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">env_name</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">filename</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">total_timesteps</span><span class="p">)</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Chi Cheng, Aoming Liang, Boai Sun, Yuqi Yan, Dixia Fan.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

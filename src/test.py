@@ -8,7 +8,7 @@ jl = Julia(compiled_modules=False)
 
 from julia import Main
 print(Main.eval("Threads.nthreads()"))
-from src.VIV_gym import JuliaEnv
+from gym_base import JuliaEnv
 
 """
 

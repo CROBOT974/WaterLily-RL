@@ -7,14 +7,37 @@ RL-WaterLily documentation
 ============================
 
 .. toctree::
-   :maxdepth: 2
-   :caption: Contents:
+   :maxdepth: 1
+   :caption: USER GUIDE:
 
    modules
 
 Indices and tables
 =====================
 
-* :ref:'genindex'
-* :ref:'modindex'
-* :ref:'search'
+.. toctree::
+   :maxdepth: 1
+   :caption: MODULES:
+
+   modules
+
+Indices and tables
+=====================
+
+.. toctree::
+   :maxdepth: 1
+   :caption: TUTORIALS:
+
+   modules
+
+Indices and tables
+=====================
+
+.. toctree::
+   :maxdepth: 1
+   :caption: API:
+
+   python_apis
+
+Indices and tables
+
