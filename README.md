@@ -66,8 +66,8 @@ python test.py --env_name="VIV-v0" --total_timesteps=80_000 --filename="PPO_mode
 ### Restrain the Vortex-induced Vibration
 * Before training
 
-![VIV-v0](./result/viv_simulation.gif)
+![VIV-v0](./result/gif/viv_simulation.gif)
 
 * After training
 
-![VIV-trained](./result/train_policy_demo.gif)
+![VIV-trained](./result/gif/train_policy_demo.gif)
