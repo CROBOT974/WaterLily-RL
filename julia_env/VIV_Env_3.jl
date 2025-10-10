@@ -151,7 +151,7 @@ function step!(env::VIVSimEnv, F::Real; render=false)
     else
 
         force = -WaterLily.pressure_force(env.sim)
-        println("force in x direction = $(force[1]), force in y direction = $(force[2])")
+        # println("force in x direction = $(force[1]), force in y direction = $(force[2])")
 
         env.step += 1
         measure!(env.sim, tphys)

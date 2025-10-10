@@ -13,11 +13,12 @@ setup(
     packages=find_packages(),  # 自动查找所有包
     install_requires=[         # 依赖列表
         "numpy>=2.2.6",
-        "julia",
+        "julia==0.6.2",
         "gymnasium",
         "stable-baselines3",
         "matplotlib",
         "imageio",
+        "torchvision==0.23.0",
     ],
     classifiers=[              # 分类信息（可选）
         "License :: OSI Approved :: MIT License",

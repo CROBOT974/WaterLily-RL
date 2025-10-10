@@ -60,7 +60,7 @@ Pkg.add([
 ```
 ### Run a demo(测试中)
 ```
-python test.py --env_name="VIV-v0" --total_timesteps=80_000 --filename="PPO_model" -learn
+python ./src/test.py --env_name="VIV-v0" --total_timesteps=80_000 --filename="PPO_model" --learn
 ```
 ## Tutorial
 ### Restrain the Vortex-induced Vibration

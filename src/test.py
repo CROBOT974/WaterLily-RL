@@ -1,6 +1,7 @@
 import os
 import gymnasium as gym
 import argparse
+import julia_env
 
 os.environ["JULIA_NUM_THREADS"] = "8"
 from julia import Julia
@@ -63,7 +64,7 @@ class RewardLoggerCallback(BaseCallback):
         return True
 
 checkpoint_callback = CheckpointCallback(
-    save_freq= 1000,
+    save_freq= 10000,
     save_path="./checkpoints/",
     name_prefix="ppo_model",
     save_replay_buffer=True,

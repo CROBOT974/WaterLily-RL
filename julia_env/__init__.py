@@ -1,9 +1,9 @@
 import gymnasium as gym
 from gymnasium.envs.registration import register
-from ..src.gym_base import VIVEnv, FoilEnv, DragEnv, ShapeOpEnv, JuliaEnv
+from src.gym_base import VIVEnv, FoilEnv, DragEnv, ShapeOpEnv, JuliaEnv
 import numpy as np
 
-diameter = 64
+diameter = 16
 def pos_generator():
     return [0.0, np.random.uniform(- diameter/6, diameter/6)]
 def ksi_generator():
@@ -18,10 +18,29 @@ register(
         "max_episode_steps": 2000,
         "env": VIVEnv,
         "statics": {"L_unit": diameter, 
-                    "F_scale": 500, 
+                    "action_scale": 50, 
                     "size": [10, 8], 
                     "location": [3, 4]},
-        "variables": {"position":[0.0, -1.0], 
+        "variables": {"position":[0.0, diameter/6], 
+                      "velocity":[0.0, 0.0]},
+        "spaces": {"action": 1, 
+                   "observation": 3},
+        "verbose": True
+    }
+)
+
+register(
+    id="VIV-v1",
+    entry_point = JuliaEnv,
+    kwargs={
+        "render_mode": None,
+        "max_episode_steps": 2000,
+        "env": VIVEnv,
+        "statics": {"L_unit": diameter, 
+                    "action_scale": 50, 
+                    "size": [10, 8], 
+                    "location": [3, 4]},
+        "variables": {"position":[0.0, diameter/6], 
                       "velocity":[0.0, 0.0]},
         "spaces": {"action": 1, 
                    "observation": 3},
@@ -53,7 +72,7 @@ register(
 )
 
 register(
-    id="Foil-v0",
+    id="Foil-v1",
     entry_point = JuliaEnv,
     kwargs={
         "render_mode": "rgb_array",
