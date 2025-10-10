@@ -30,6 +30,7 @@ import os
 # dir videos
 video_folder = "./videos/"
 os.makedirs(video_folder, exist_ok=True)
+savefile = os.path.join("./model",)
 
 """
 

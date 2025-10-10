@@ -43,20 +43,7 @@ pip install -r requirements.txt
 ```
 ### Julia packages
 ```
-using Pkg
-Pkg.add([
-    "ImageCore",
-    "WaterLily",
-    "StaticArrays",
-    "PyPlot",
-    "PyCall",
-    "ColorSchemes",
-    "ImageIO",
-    "FileIO",
-    "Colors",
-    "Images",
-    "Statistics"
-])
+julia julia_requirement.jl
 ```
 ### Run a demo(测试中)
 ```
