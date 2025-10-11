@@ -45,9 +45,15 @@ pip install -r requirements.txt
 ```
 julia julia_requirement.jl
 ```
-### Run a demo(测试中)
+### Run a demo
+train
 ```
-python ./src/test.py --env_name="VIV-v0" --total_timesteps=80_000 --filename="PPO_model" --learn
+python ./src/test.py --env_name="VIV-v1" --total_timesteps=80_000 --filename="PPO_model"
+```
+
+play
+```
+python ./src/test.py --env_name="VIV-v0" --filename="PPO_model" --giffilename="train_policy_demo.gif" --datafilename="info_PPO.npy" --play
 ```
 ## Tutorial
 ### Restrain the Vortex-induced Vibration

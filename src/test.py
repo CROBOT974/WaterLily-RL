@@ -127,7 +127,6 @@ if __name__ == '__main__':
     parser.add_argument('--total_timesteps', type=int, default=80_000, help='total timesteps.')
     args = parser.parse_args()
     if args.play:
-        print("开始测试")
         play(args.env_name, args.filename, args.giffilename, args.datafilename)
     else:
         learn(args.env_name, args.filename, args.total_timesteps)
