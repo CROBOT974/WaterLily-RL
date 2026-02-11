@@ -64,3 +64,16 @@ python ./src/test.py --env_name="VIV-v0" --filename="PPO_model" --giffilename="t
 * After training
 
 ![VIV-trained](./result/gif/train_policy_demo.gif)
+
+## Citation
+
+If you use this code in your research, please cite:
+
+```bibtex
+@software{WaterLily_RL_2025,
+  author = {Chi, Cheng and Aoming, Liang and Boai, Sun and Dixia, Fan},
+  title = {WaterLily-RL: WaterLily-based Deep Reinforcement Learning Project},
+  url = {[https://github.com/CROBOT974/WaterLily-RL](https://github.com/CROBOT974/WaterLily-RL)},
+  version = {1.0.0},
+  year = {2025}
+}
