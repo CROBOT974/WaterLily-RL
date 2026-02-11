@@ -1,0 +1,19 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+authors:
+- family-names: "Cheng"
+  given-names: "Chi"
+  orcid: "https://orcid.org/0000-0000-0000-0000"
+- family-names: "Liang"
+  given-names: "Aoming"
+  orcid: "https://orcid.org/0000-0000-0000-0000"
+- family-names: "Sun"
+  given-names: "Boai"
+  orcid: "https://orcid.org/0000-0000-0000-0000"
+- family-names: "Fang"
+  given-names: "Dixia"
+  orcid: "https://orcid.org/0000-0000-0000-0000"
+title: "WaterLily-RL"
+version: 1.0.0
+date-released: 2026-02-11
+url: "https://github.com/CROBOT974/WaterLily-RL"
