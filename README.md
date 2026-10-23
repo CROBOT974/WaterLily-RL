@@ -43,7 +43,7 @@ pip install -r requirements.txt
 ```
 ### Julia packages
 ```
-julia julia_requirement.jl
+julia julia_requirements.jl
 ```
 ### Run a demo
 train
